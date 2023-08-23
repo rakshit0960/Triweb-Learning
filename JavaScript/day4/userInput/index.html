@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UserInput</title>
+</head>
+<body>
+    
+    <input type="number" placeholder="number1">
+    +
+    <input type="number" placeholder="number2">
+    <button>Sum</button>
+    <h1>Result</h1>
+
+    <script>
+        const [input1, input2] = document.querySelectorAll("input");
+        const button = document.querySelector("button");
+        const h1 = document.querySelector("h1")
+
+        button.addEventListener('click', () => {
+            const num1 = parseFloat(input1.value);
+            const num2 = parseFloat(input2.value);
+            h1.innerText = num1 + num2;
+        })
+    </script>
+
+</body>
+</html>
