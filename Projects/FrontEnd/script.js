@@ -1,3 +1,5 @@
+const boxes = document.querySelectorAll(".box")
+
 const redBlock = document.querySelector(".red-box")
 const blueBlock = document.querySelector(".blue-box")
 const greenBlock = document.querySelector(".green-box")
@@ -12,9 +14,18 @@ const moveToGreenBtn = document.querySelector(".to-green")
 const moveToBlueBtn = document.querySelector(".to-blue")
 const moveToYellowBtn = document.querySelector(".to-yellow")
 
-let hasUser = false;
+AddUserBtn.addEventListener('click', () => {
+    if (!userTextInput.value) return;
+    
+    redBlock.innerText = userTextInput.value;
+    hasUser = true;
+    userTextInput.placeholder = 'Cannot Add More Users'
+    userTextInput.value = ''
+    userTextInput.disabled = true;
+})
 
-AddUserBtn.addEventListener('click', event => {
-    if (userTextInput.value && !hasUser)
-        redBlock.innerText = userTextInput.value;
+DelUserBtn.addEventListener('click', () => {
+    boxes.forEach(box => box.innerText = '');
+    userTextInput.placeholder = 'User Name'
+    userTextInput.disabled = false;
 })
