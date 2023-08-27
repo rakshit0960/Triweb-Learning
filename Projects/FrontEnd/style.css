@@ -13,6 +13,7 @@
 }
 
 .box {
+    font-size: 3rem;
     aspect-ratio: 1 / 1;
     border: 1px solid;
     display: grid;
