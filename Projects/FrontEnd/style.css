@@ -1,0 +1,53 @@
+.container {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid;
+    margin: auto;
+    width: 600px;
+    overflow: hidden;
+}
+
+
+.boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.box {
+    aspect-ratio: 1 / 1;
+    border: 1px solid;
+    display: grid;
+    place-content: center;
+}
+
+.red-box {
+    background-color: #dd2b2b;
+}
+
+.green-box {
+    background-color: #1f971f;
+}
+
+.yellow-box {
+    background-color: #dbdb40;
+}
+
+.blue-box {
+    background-color: #5f5fd1;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+    gap: 6px;
+}
+.btn-option {
+    font-size: 22px;
+    padding: 8px 15px;
+}
+
+.user-input {
+    grid-column: span 2;
+    font-size: 25px;
+    padding: 8px 15px;
+}
