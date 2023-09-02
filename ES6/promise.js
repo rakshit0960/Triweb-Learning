@@ -31,4 +31,4 @@ updateAge(-1)
     } finally {
         console.log('finally')
     }
-})(10)
+})(10)  
