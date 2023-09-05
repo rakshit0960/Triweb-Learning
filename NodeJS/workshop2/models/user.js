@@ -1,9 +1,9 @@
 const db = require('../util/database');
 
 module.exports.insert = async ({name, email, password, remark}) => {
-    const id = 0;
+    let id = 0;
     try {
-        let query = "INSERT INTO USERS ('name', 'email', 'password', 'remark') VALUES (?, ?, ?, ?)";
+        let query = "INSERT INTO users (name, email, password, remark) VALUES (?, ?, ?, ?);";
         let result = await db.execute(query, [name, email, password, remark]);
         id = result[0].insertId
     } catch (error) {
@@ -17,7 +17,7 @@ module.exports.insert = async ({name, email, password, remark}) => {
 
 module.exports.get = async (userData) => {
     try {
-        let query = "SELECT * FROM USER WHERE id=?";
+        let query = "SELECT * FROM users WHERE id=?;";
         let result = await db.execute(query, [userData.id]);
         return result;
     } catch (error) {
@@ -28,7 +28,7 @@ module.exports.get = async (userData) => {
 
 module.exports.update = async (userData) => {
     try {
-        let query = "UPDATE 'users' SET 'password'=? WHERE id=?";
+        let query = "UPDATE users SET password=? where id=?;";
         let result = await db.execute(query, [userData.password, userData.id]);
         return true;
     } catch (error) {
@@ -39,7 +39,7 @@ module.exports.update = async (userData) => {
 
 module.exports.delete = async (userData) => {
     try {
-        let query = "DELETE FROM users WHERE id=?";
+        let query = "DELETE FROM users WHERE id=?;";
         let result = await db.execute(query, [userData.id]);
         return true;
     } catch (error) {
