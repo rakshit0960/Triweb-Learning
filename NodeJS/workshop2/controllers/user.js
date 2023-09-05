@@ -1,13 +1,9 @@
 const userModel = require('../models/user');
 
 module.exports.register = async (req, res) => {
-    let insertedID = await userModel.insert(req.body)
+    console.log(req.body)
+    let insertedID = await userModel.create(req.body);
     console.log(insertedID);
-    if (insertedID > 0) {
-        res.send({status: "success", data: {id: insertedID}})
-    } else {
-        res.send({status: "error", message: "User registration fail"})
-    }
 }
 
 module.exports.get =  async (req, res) => {
