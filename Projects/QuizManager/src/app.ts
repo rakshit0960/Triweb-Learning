@@ -2,10 +2,10 @@ import express from 'express'
 import userRouter from './routes/user'
 import mongoose from 'mongoose'
 require("dotenv").config();
-const connectionString = "mongodb+srv://root:root@cluster0.fmt2237.mongodb.net/workshopDB?retryWrites=true&w=majority"
-
 
 const app = express();
+
+const connectionString: string = process.env.CONNECTION_STRING || "";
 
 mongoose.connect(connectionString)
     .catch( err => console.log(err) )
