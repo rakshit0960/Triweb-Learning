@@ -1,12 +1,14 @@
 # Triweb Learning
 
-<img src='./HTML/image/WhatsApp Image 2023-08-09 at 22.51.22.jpg' width='350px' style="display:block; margin-left:auto;margin-right:auto">  
+<p align="center">
+    <img src='./HTML/image/WhatsApp Image 2023-08-09 at 22.51.22.jpg' width='350px'>  
+</p>
 
 ## Lessons Learned
 
-learned fullstack devlopment using MERN stack
+learned full-stack development using MERN stack
 
-- [HTML](./HTML/) : HTML basics and gott deeper into it. I gained knowledge of different elements. Created a registration form and a daily routine timetable. I explored HTML elements and learned a lot from these tasks
+- [HTML](./HTML/): HTML basics and got deeper into it. I gained knowledge of different elements. Created a registration form and a daily routine timetable. I explored HTML elements and learned a lot from these tasks
   - [Form](./HTML/Form)
 
 ---
@@ -17,7 +19,7 @@ learned fullstack devlopment using MERN stack
 
 ---
 
-- [Javascript](./Javascript/) : Core concepts of javascript. Here deep dive into JS
+- [Javascript](./Javascript/) : Core concepts of javascript. Her deep dive into JS
 
 ---
 
@@ -27,7 +29,7 @@ learned fullstack devlopment using MERN stack
 
 ---
 
-- [MySQL](./MySQL/) : Learn concepts of database and explore mysql queries and implement in NodeJS.
+- [MySQL](./MySQL/): Learn concepts of database and explore mysql queries and implement in NodeJS.
 
 ---
 
@@ -35,11 +37,11 @@ learned fullstack devlopment using MERN stack
 
 ---
 
-- [NodeJS](./NodeJS/) : Node js runtime with Backend with Express and learn how to create APIs. Here will get different concepts of Nodejs and basic programming.
+- [NodeJS](./NodeJS/): Node js runtime with Backend with Express and learn how to create APIs. Here will get different concepts of Nodejs and basic programming.
 
 ---
 
-- [MongoDB](./MongoDB/) : mongoDB datatbase. different queries in mongoDB
+- [MongoDB](./MongoDB/) : mongoDB datatbase. different queries in MongoDB
 
 ---
 
