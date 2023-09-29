@@ -4,12 +4,14 @@ import { Error } from "mongoose";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 
+// return response template 
 interface ReturnResponse {
     status: "SUCCESS" | "ERROR",
     message: String,
     data: object
 }
 
+// register new user
 export const registerUser = async (req: Request, res: Response) => {
     try {
         let { name, email, password } = req.body;
@@ -25,7 +27,7 @@ export const registerUser = async (req: Request, res: Response) => {
     }
 }
 
-
+// get specific user info using their id
 export const getUser = async (req: Request, res: Response) => {
     try {
         const userId = req.params.userID;
@@ -40,6 +42,7 @@ export const getUser = async (req: Request, res: Response) => {
     }
 }
 
+// get all users info
 export const getAllUser = async (req: Request, res: Response) => {
     try {
         const userId = req.params.userID;
@@ -52,7 +55,7 @@ export const getAllUser = async (req: Request, res: Response) => {
     }
 }
 
-
+// login to a user using email and password
 export const loginUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
@@ -61,18 +64,23 @@ export const loginUser = async (req: Request, res: Response) => {
         const user = await User.findOne({ email });
         if (!user) throw new Error("user Not found!");
 
+        // comparing hashes to check if password is correct
         const status = await bcrypt.compare(password, user.password.toString());
         if (!status) throw new Error("Wrong Credentials");
 
+        // generating json web tokens 
         const key = process.env.SECRET_KEY || "";
         const token = jwt.sign({ userID: user.id }, key, { expiresIn: '10h' });
 
+        // sending token
         const response: ReturnResponse = { status: "SUCCESS", message: "Successful Logged", data: { token } }
         res.send(response);
+
     } catch (err: any) {
+        
         const response: ReturnResponse = { status: "ERROR", message: "Something Went Wrong", data: { error: err } }
         if (err == Error.DocumentNotFoundError) response.message = "user Not found";
-
+        
         if (err.message == "Wrong Credentials") {
             response.message = err.message
             res.status(401)

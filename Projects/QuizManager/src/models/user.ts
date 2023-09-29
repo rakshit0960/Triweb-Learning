@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
+// interface for user Schema 
 export interface IUser {
     name: String,
     email: String,
