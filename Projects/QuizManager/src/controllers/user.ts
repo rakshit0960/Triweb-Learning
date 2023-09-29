@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User, IUser } from '../models/user'
 import { Error } from "mongoose";
+import bcrypt from 'bcryptjs';
 
 interface ReturnResponse {
     status: "SUCCESS" | "ERROR",
@@ -10,8 +11,9 @@ interface ReturnResponse {
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
-        const user = new User(req.body);
-        user.password = Buffer.from(user.password).toString('base64');
+        let { name, email, password } = req.body;
+        password = await bcrypt.hash(password, 12);
+        const user = new User({name, email, password});
         const result = await user.save();
 
         const response: ReturnResponse = { status: "SUCCESS", message: "User Registered", data: { id: result.id } };
