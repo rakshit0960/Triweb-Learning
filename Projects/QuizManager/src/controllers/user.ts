@@ -29,11 +29,12 @@ export const getUser = async (req: Request, res: Response) => {
     try {
         const userId = req.params.userID;
         const user = await User.findOne({ _id: userId });
+        if (!user) throw new Error("user Not found!");
         const response: ReturnResponse = { status: "SUCCESS", message: "User Found", data: { user: user } }
         res.send(response);
     } catch (err) {
         const response: ReturnResponse = { status: "ERROR", message: "Something Went Wrong", data: { error: err } }
-        if (err = Error.DocumentNotFoundError) response.message = "user Not found";
+        if (err == Error.DocumentNotFoundError) response.message = "user Not found";
         res.send(response);
     }
 }
@@ -46,6 +47,33 @@ export const getAllUser = async (req: Request, res: Response) => {
         res.send(response);
     } catch (err) {
         const response: ReturnResponse = { status: "ERROR", message: "Something Went Wrong", data: { error: err } }
+        res.send(response);
+    }
+}
+
+
+export const loginUser = async (req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body;
+        console.log(email, password)
+
+        const user = await User.findOne({ email }); 
+        if (!user) throw new Error("user Not found!");
+
+        const status = await bcrypt.compare(password, user.password.toString());
+        if (!status) throw new Error("Wrong Credentials");
+
+        const response: ReturnResponse = { status: "SUCCESS", message: "Successful Logged", data: { user } }
+        res.send(response);
+    } catch (err: any) {
+        const response: ReturnResponse = { status: "ERROR", message: "Something Went Wrong", data: { error: err } }
+        if (err == Error.DocumentNotFoundError) response.message = "user Not found";
+        
+        if (err.message == "Wrong Credentials") {
+            response.message = err.message
+            res.status(401) 
+        }
+
         res.send(response);
     }
 }

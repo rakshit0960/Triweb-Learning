@@ -1,5 +1,5 @@
 import express, { application } from 'express' 
-import { registerUser, getUser, getAllUser } from '../controllers/user'
+import { registerUser, getUser, getAllUser, loginUser } from '../controllers/user'
 
 const router = express.Router();
 
@@ -10,7 +10,9 @@ router.post('/', registerUser);
 router.get('/:userID', getUser);
 
 // get all users
-router.get('/', getAllUser)
+router.get('/', getAllUser);
+
+router.post('/login', loginUser)
 
 
 
