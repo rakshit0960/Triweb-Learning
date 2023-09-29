@@ -8,7 +8,7 @@ const app = express();
 const connectionString: string = process.env.CONNECTION_STRING || "";
 
 mongoose.connect(connectionString)
-    .catch( err => console.log(err) )
+    .catch( err => console.log(err, "error") )
     .then( () => {
         console.log(`connected to database`)
         app.listen(process.env.PORT, () => console.log(`listening on http://localhost:${process.env.PORT}`)) 

@@ -11,6 +11,7 @@ interface ReturnResponse {
 export const registerUser = async (req: Request, res: Response) => {
     try {
         const user = new User(req.body);
+        user.password = Buffer.from(user.password).toString('base64');
         const result = await user.save();
 
         const response: ReturnResponse = { status: "SUCCESS", message: "User Registered", data: { id: result.id } };
