@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { User, IUser } from '../models/user'
 import { Error } from "mongoose";
 import bcrypt from 'bcryptjs';
@@ -31,8 +31,12 @@ export const registerUser = async (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => {
     try {
         const userId = req.params.userID;
+
+        // find user with id, userId in collection
         const user = await User.findOne({ _id: userId });
         if (!user) throw new Error("user Not found!");
+
+        // sending user  
         const response: ReturnResponse = { status: "SUCCESS", message: "User Found", data: { user: user } }
         res.send(response);
     } catch (err) {
@@ -45,7 +49,7 @@ export const getUser = async (req: Request, res: Response) => {
 // get all users info
 export const getAllUser = async (req: Request, res: Response) => {
     try {
-        const userId = req.params.userID;
+        // get all users    
         const users = await User.find();
         const response: ReturnResponse = { status: "SUCCESS", message: "User Found", data: { users: users } }
         res.send(response);
@@ -88,4 +92,9 @@ export const loginUser = async (req: Request, res: Response) => {
 
         res.send(response);
     }
+}
+
+// update user
+export const updateUser = (req: Request, res: Response) => {
+
 }
