@@ -1,15 +1,13 @@
 import express from 'express' 
-import {  getUser, getAllUser, updateUser } from '../controllers/user'
+import {  getUser, updateUser } from '../controllers/user'
+import { isAuthenticated } from '../middlewares/isAuthenticated'
 
 const router = express.Router();
 
 // get specific user
-router.get('/:userID', getUser);
+router.get('/:userID', isAuthenticated, getUser);
 
-// get all users
-router.get('/', getAllUser);
-
-router.put('/', updateUser);
+router.put('/', isAuthenticated, updateUser);
 
 
 
