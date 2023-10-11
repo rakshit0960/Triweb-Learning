@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { User } from '../models/user'
-import { Error } from "mongoose";
+import { Error as ProjectError } from "mongoose";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
+import ProjectError from "../helper/ProjectError";
 
 // return response template 
 interface ReturnResponse {
@@ -35,11 +36,11 @@ export const loginUser = async (req: Request, res: Response) => {
         console.log(email, password)
 
         const user = await User.findOne({ email });
-        if (!user) throw new Error("user Not found!");
+        if (!user) throw new ProjectError("user Not found!");
 
         // comparing hashes to check if password is correct
         const status = await bcrypt.compare(password, user.password.toString());
-        if (!status) throw new Error("Wrong Credentials");
+        if (!status) throw new ProjectError("Wrong Credentials");
 
         // generating json web tokens 
         const key = process.env.SECRET_KEY || "";
@@ -52,7 +53,7 @@ export const loginUser = async (req: Request, res: Response) => {
     } catch (err: any) {
         
         const response: ReturnResponse = { status: "ERROR", message: "Something Went Wrong", data: { error: err } }
-        if (err == Error.DocumentNotFoundError) response.message = "user Not found";
+        if (err == ProjectError.DocumentNotFoundError) response.message = "user Not found";
         
         if (err.message == "Wrong Credentials") {
             response.message = err.message

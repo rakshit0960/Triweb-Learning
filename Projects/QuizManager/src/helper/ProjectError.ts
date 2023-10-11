@@ -1,6 +1,6 @@
 export default class ProjectError extends Error {
     private _status: number = 0;
-    private _data: object = {};
+    private _data: object | Array<any> = {};
     
     public get statusCode() : number {
         return this._status;

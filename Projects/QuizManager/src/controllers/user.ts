@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../models/user";
-import { Error as ProjectError } from "mongoose";
-import  c  from '../helper/ProjectError' 
+import  ProjectError  from '../helper/ProjectError' 
 
 // return response template
 interface ReturnResponse {
@@ -19,7 +18,12 @@ export const getUser = async (
   try {
     const userId = req.params.userID;
 
-    if (userId != req.userID) throw new ProjectError("Cant get another Users Info");
+    if (userId != req.userID)  {
+      const error = new ProjectError("Cant get another Users Info");
+      error.statusCode = 500;
+      error.data = {}
+      throw error;
+    }
 
     // find user with id, userId in collection
     const user = await User.findOne({ _id: userId });
