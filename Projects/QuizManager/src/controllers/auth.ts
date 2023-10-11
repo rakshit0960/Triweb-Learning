@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { User } from '../models/user'
-import { Error as ProjectError } from "mongoose";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 import ProjectError from "../helper/ProjectError";
+import { Error } from "mongoose";
 
 // return response template 
 interface ReturnResponse {
@@ -53,7 +53,7 @@ export const loginUser = async (req: Request, res: Response) => {
     } catch (err: any) {
         
         const response: ReturnResponse = { status: "ERROR", message: "Something Went Wrong", data: { error: err } }
-        if (err == ProjectError.DocumentNotFoundError) response.message = "user Not found";
+        if (err == Error.DocumentNotFoundError) response.message = "user Not found";
         
         if (err.message == "Wrong Credentials") {
             response.message = err.message
