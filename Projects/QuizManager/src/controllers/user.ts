@@ -1,38 +1,57 @@
-import { Request, Response } from "express";
-import { User, } from '../models/user'
-import { Error } from "mongoose";
+import { NextFunction, Request, Response } from "express";
+import { User } from "../models/user";
+import { Error as ProjectError } from "mongoose";
+import  c  from '../helper/ProjectError' 
 
-// return response template 
+// return response template
 interface ReturnResponse {
-    status: "SUCCESS" | "ERROR",
-    message: String,
-    data: object
+  status: "SUCCESS" | "ERROR";
+  message: String;
+  data: object;
 }
-
-
 
 // get specific user info using their id
-export const getUser = async (req: Request, res: Response) => {
-    try {
-        const userId = req.params.userID;
-        
-        if (userId != req.userID) throw new Error("Cant get another Users Info")
+export const getUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.params.userID;
 
-        // find user with id, userId in collection
-        const user = await User.findOne({ _id: userId });
+    if (userId != req.userID) throw new ProjectError("Cant get another Users Info");
 
-        if (!user) throw new Error("user Not found!");
-        // sending user  
-        const response: ReturnResponse = { status: "SUCCESS", message: "User Found", data: { user: user } }
-        res.send(response);
-    } catch (error) {
-        const response: ReturnResponse = { status: "ERROR", message: "Something Went Wrong", data: { error } }
-        if (error == Error.DocumentNotFoundError) response.message = "user Not found";
-        res.send(response);
-    }
-}
+    // find user with id, userId in collection
+    const user = await User.findOne({ _id: userId });
+
+    if (!user) throw new ProjectError("user Not found!");
+    // sending user
+    const response: ReturnResponse = {
+      status: "SUCCESS",
+      message: "User Found",
+      data: { user: user },
+    };
+    res.send(response);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // update user
-export const updateUser = (req: Request, res: Response) => {
+export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        if (req.userID != req.params.userID) 
+            throw new ProjectError("not authorized");
+        
+        const userID = req.userID;
+        const user = await User.findById(userID);
+        if (!user) throw new ProjectError("user with id not found");
+        user.name = req.body.name;
+        await user.save();
 
-}
+        const response: ReturnResponse = {status: "SUCCESS", message: "User Updated", data: {user}};
+        res.send(response);
+    } catch (error) {
+        next(error);
+    }
+};
