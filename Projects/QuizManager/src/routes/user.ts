@@ -1,7 +1,6 @@
 import express from 'express' 
 import {  getUser, updateUser } from '../controllers/user'
 import { isAuthenticated } from '../middlewares/isAuthenticated'
-import { query } from 'express-validator';
 
 const router = express.Router();
 

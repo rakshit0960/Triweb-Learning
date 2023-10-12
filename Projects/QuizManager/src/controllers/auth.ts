@@ -3,6 +3,7 @@ import { User } from '../models/user'
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 import ProjectError from "../helper/ProjectError";
+import { validationResult } from "express-validator";
 import { Error } from "mongoose";
 
 // return response template 
@@ -15,6 +16,12 @@ interface ReturnResponse {
 // register new user
 export const registerUser = async (req: Request, res: Response) => {
     try {
+        const validationError = validationResult(req);
+        if (!validationError.isEmpty()) {
+            const error = new ProjectError("Validation Error");
+            error.statusCode = 420;
+            throw error;
+        } 
         let { name, email, password } = req.body;
         password = await bcrypt.hash(password, 12);
         const user = new User({ name, email, password });
