@@ -42,13 +42,12 @@ app.get('/', (req, res) => { res.send("hello world") })
 
 app.use((err: projectError, req: Request, res: Response, next: NextFunction) => {
     let response: ReturnResponse;
-    let message: string;
-    let statusCode: number;
+
     if (err.statusCode && err.statusCode  < 500) {
-        response = {status:'ERROR', message: err.message, data: {}}
+        response = {status:'ERROR', message: err.message, data: err.data}
         res.status(err.statusCode);
     } else {
-        response = {status:'ERROR', message: "internal server Error!!!, try again later", data: {}}
+        response = {status:'ERROR', message: "internal server Error!!!, try again later", data: err.data}
         res.status(500);
     }
     res.send(response);
