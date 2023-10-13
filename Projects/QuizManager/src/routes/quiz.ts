@@ -8,13 +8,13 @@ const router = express.Router();
 router.post('/', createQuiz)
 
 // get all quiz with id
-router.get('/:quizId', updateQuiz)
+router.get('/:quizId', getQuiz)
 
 // get all quiz
 router.get('/',  getAllQuiz)
 
 // update quiz
-router.put('/', updateQuiz )
+router.put('/:quizId', updateQuiz )
 
 // delete quiz
 router.delete('/:quizId', deleteQuiz )
