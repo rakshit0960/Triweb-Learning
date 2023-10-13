@@ -84,6 +84,12 @@ export const updateQuiz = async (req: Request, res: Response, next: NextFunction
             throw error;
         }
 
+        if (quiz.is_published) {
+            const error = new ProjectError("cannot updated published quiz");
+            error.statusCode = 405;
+            throw error;
+        }
+
         quiz.name = req.body.name || quiz.name;
         quiz.question_list = req.body.question_list || quiz.question_list;
         quiz.answers = req.body.answers || quiz.answers;
@@ -111,6 +117,12 @@ export const deleteQuiz = async (req: Request, res: Response, next: NextFunction
         if (quiz.created_by != req.userID) {
             const error = new ProjectError("not authorized to access this quiz");
             error.statusCode = 404;
+            throw error;
+        }
+
+        if (quiz.is_published) {
+            const error = new ProjectError("cannot delete published quiz");
+            error.statusCode = 405;
             throw error;
         }
 
