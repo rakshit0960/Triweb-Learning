@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Quiz from "../models/quiz";
+import ProjectError from "../helper/ProjectError";
 
 // return response template
 interface ReturnResponse {
@@ -26,7 +27,14 @@ export const createQuiz = async (req: Request, res: Response, next: NextFunction
 
 export const getAllQuiz = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const quizzes = await Quiz.find();
+        const quizzes = await Quiz.find({}, { name: true, question_list: true, answers: true });
+
+        if (!quizzes) {
+            const error = new ProjectError("no Quiz not found");
+            error.statusCode = 404;
+            throw error;
+        }
+
         const response: ReturnResponse = {status: "SUCCESS", message: "quizzes found", data: quizzes}
         res.send(response);
     } catch (error) {
@@ -34,8 +42,19 @@ export const getAllQuiz = async (req: Request, res: Response, next: NextFunction
     }
 }
 
-export const getQuiz = (req: Request, res: Response) => {
-  res.send(req.body);
+export const getQuiz = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const quizId = req.params.quizId
+    const quiz = await Quiz.findById(quizId, { name: true, question_list: true, answers: true });
+
+    if (!quiz) {
+        const error = new ProjectError("Quiz not found");
+        error.statusCode = 404;
+        throw error;
+    }
+  } catch (error) {
+    next (error);
+  }
 };
 
 export const updateQuiz = (req: Request, res: Response) => {
