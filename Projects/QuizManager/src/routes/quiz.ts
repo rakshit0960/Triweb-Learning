@@ -1,6 +1,6 @@
 import express from "express";
 
-import { createQuiz, updateQuiz, deleteQuiz, getQuiz } from "../controllers/quiz";
+import { createQuiz, updateQuiz, deleteQuiz, getQuiz, publishQuiz } from "../controllers/quiz";
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.put('/', updateQuiz )
 router.delete('/:quizId', deleteQuiz )
 
 // publish quiz
-router.patch('/:quizId', )
+router.patch('/:quizId', publishQuiz)
 
 
 

@@ -4,6 +4,7 @@ import authRouter from './routes/auth'
 import mongoose from 'mongoose'
 import projectError from './helper/ProjectError'
 import quizRouter from './routes/quiz'
+import { isAuthenticated } from './middlewares/isAuthenticated'
 require("dotenv").config();
 
 const app = express();
@@ -38,7 +39,7 @@ app.use(express.json());
 
 // routes
 app.use('/user', userRouter, authRouter);
-app.use('/quiz', quizRouter);
+app.use('/quiz', isAuthenticated, quizRouter);
 app.get('/', (req, res) => { res.send("hello world") })
 
 
