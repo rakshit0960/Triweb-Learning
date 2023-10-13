@@ -22,8 +22,17 @@ export const createQuiz = async (req: Request, res: Response, next: NextFunction
     } catch (error) {
         next(error);
     }
-;
 };
+
+export const getAllQuiz = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const quizzes = await Quiz.find();
+        const response: ReturnResponse = {status: "SUCCESS", message: "quizzes found", data: quizzes}
+        res.send(response);
+    } catch (error) {
+        next(error);
+    }
+}
 
 export const getQuiz = (req: Request, res: Response) => {
   res.send(req.body);
