@@ -4,17 +4,16 @@ const { Schema, model } = mongoose;
 const quizSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
-    questionList: [
+    question_list: [
       {
-        question_number: Number,
-        statement: String,
+        question_number: {type: Number, required: true},
+        question: String,
         options: {},
       },
     ],
-    answer: {},
-    createdBy: { type: mongoose.Types.ObjectId },
-    password: { type: String, required: true },
-    is_published: { type: Boolean },
+    answers: {},
+    created_by: { type: mongoose.Types.ObjectId, required: true },
+    is_published: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
