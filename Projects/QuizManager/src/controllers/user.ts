@@ -44,10 +44,12 @@ export const getUser = async (
 // update user
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        if (req.userID != req.params.userID) 
-            throw new ProjectError("not authorized");
-        
-        const userID = req.userID;
+        const userID = req.body._id;
+        if (!userID) {
+          const error = new ProjectError('user id not found in request body')
+          error.statusCode = 401
+          throw error;
+        } 
         const user = await User.findById(userID);
         if (!user) throw new ProjectError("user with id not found");
         user.name = req.body.name;

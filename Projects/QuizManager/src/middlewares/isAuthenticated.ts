@@ -7,8 +7,12 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
     try {
         const authHeader = req.headers.authorization
 
-        if (!authHeader) throw new ProjectError('Not Authorized');
-
+        if (!authHeader) {
+            const error = new ProjectError('Not Authorized');
+            error.statusCode = 402
+            throw error;
+        }
+        
         const token = authHeader.split(" ")[1]
 
         const decodedToken: { userID: string, iat: number, exp: number } = <any>verify(token, process.env.SECRET_KEY || "")

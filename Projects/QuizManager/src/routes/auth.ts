@@ -18,7 +18,7 @@ router.post(
   body("email")
     .trim()
     .isEmail()
-    .custom((emailID) => {
+    .custom((emailID: string) => {
       return isUserExist(emailID)
         .then((status) => {
           if (status) {
