@@ -1,0 +1,12 @@
+nav {
+    width: 100vw;
+    border: 1px solid;
+}
+
+ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    font-size: 2rem;
+    padding: 20px;
+}
