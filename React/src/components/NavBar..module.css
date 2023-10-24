@@ -1,12 +1,21 @@
-nav {
+.nav {
     width: 100vw;
     border: 1px solid;
 }
 
-ul {
+.ul {
     display: flex;
     justify-content: space-around;
     align-items: baseline;
     font-size: 2rem;
     padding: 20px;
+}
+
+.li, .li * {
+    list-style-type: none;
+    text-decoration: none;
+} 
+
+.li:hover * {
+    color: black;
 }
